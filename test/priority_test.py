@@ -55,3 +55,8 @@ class PriorityTest(unittest.TestCase):
         a, b, c = PrioTask(24), PrioTask(14), PrioTask(4)
         luigi.build([a, b, c, x, y, z], local_scheduler=True)
         self.assertTrue(z.t < y.t < x.t < c.t < b.t < a.t)
+
+    def test_negative_priority(self):
+        neg, zero, pos = PrioTask(-1), PrioTask(0), PrioTask(1)
+        luigi.build([neg, zero, pos], local_scheduler=True)
+        self.assertTrue(neg.t < zero.t < pos.t)
